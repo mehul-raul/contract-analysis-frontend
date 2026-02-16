@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juris AI Assistant</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/x-icon" href="images/fav.png">
+</head>
+<body>
+
+    <!-- ========== LOGIN SCREEN ========== -->
+    <div id="auth-screen" class="screen">
+        <div class="chatgpt-auth-container">
+            <div class="auth-box-chatgpt">
+                
+                <div class="logo-section">
+                    <img src="images/233903050.png" alt="Contract AI Logo" style="height:100px;">
+                    
+                </div>
+                
+                <!-- Login -->
+                <div id="login-section">
+                    <h2>Welcome back</h2>
+                    <form onsubmit="handleLogin(event)" class="auth-form">
+                        <div class="input-group">
+                            <input type="email" id="login-email"
+                                   placeholder="Email address"
+                                   required autocomplete="email">
+                        </div>
+
+                        <div class="input-group">
+                            <input type="password" id="login-password"
+                                   placeholder="Password"
+                                   required autocomplete="current-password">
+                        </div>
+
+                        <button type="submit" class="btn-continue">Continue</button>
+                    </form>
+
+                    <div class="divider"><span>OR</span></div>
+
+                    <p class="auth-footer">
+                        Don't have an account?
+                        <a href="#" onclick="showSignup()" class="link-primary">Sign up</a>
+                    </p>
+                </div>
+
+                <!-- Signup -->
+                <div id="signup-section" class="hidden">
+                    <h2>Create your account</h2>
+                    <form onsubmit="handleSignup(event)" class="auth-form">
+                        <div class="input-group">
+                            <input type="email" id="signup-email"
+                                   placeholder="Email address"
+                                   required autocomplete="email">
+                        </div>
+
+                        <div class="input-group">
+                            <input type="password" id="signup-password"
+                                   placeholder="Password (min 6 characters)"
+                                   required minlength="6"
+                                   autocomplete="new-password">
+                        </div>
+
+                        <button type="submit" class="btn-continue">Continue</button>
+                    </form>
+
+                    <div class="divider"><span>OR</span></div>
+
+                    <p class="auth-footer">
+                        Already have an account?
+                        <a href="#" onclick="showLogin()" class="link-primary">Log in</a>
+                    </p>
+                </div>
+
+                <div id="auth-message" class="message"></div>
+            </div>
+
+            <p class="terms-text">
+                By continuing, you agree to our Terms of Service and Privacy Policy
+            </p>
+        </div>
+    </div>
+
+
+    <!-- ========== CHAT SCREEN ========== -->
+    <div id="chat-screen" class="screen hidden">
+
+        <!-- Navbar -->
+        <div class="navbar">
+            <div class="brand">
+                <img src="images/233903050.png" alt="Contract AI Logo" class="brand-logo">
+            </div>
+
+            <div class="nav-right">
+                <div class="avatar" onclick="toggleSettings()"></div>
+
+                <button class="icon-btn" onclick="toggleSettings()" title="Settings">
+                    <img src="images/setting.png" alt="Settings" class="icon-img">
+                </button>
+            </div>
+        </div>
+
+
+        <!-- Chat Container -->
+        <div class="chat-container">
+            <div id="messages" class="messages">
+                <div class="welcome-message">
+                    <h2>👋 Welcome!</h2>
+                    <p>Upload your contracts and ask me anything about them.</p>
+                    <p class="hint">💡 I can search across all your documents automatically</p>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Input Area -->
+        <div class="input-container">
+            <div class="input-wrapper">
+
+                <input type="file"
+                       id="file-input"
+                       accept=".pdf"
+                       style="display: none"
+                       onchange="handleFileUpload(event)">
+
+                <button class="attach-btn"
+                        onclick="document.getElementById('file-input').click()"
+                        title="Attach PDF">
+                    <img src="images/paperclip.png" alt="Attach" class="attach-icon">
+                </button>
+
+                <textarea id="message-input"
+                          placeholder="Ask me anything about your contracts..."
+                          rows="1"
+                          onkeypress="handleKeyPress(event)"
+                          oninput="autoResize(this)"></textarea>
+
+                <button class="send-btn"
+                        onclick="sendMessage()"
+                        id="send-btn"
+                        disabled>
+                    ➤
+                </button>
+
+            </div>
+        </div>
+
+
+        <!-- Settings Sidebar -->
+        <div id="settings-sidebar" class="settings-sidebar">
+
+            <div class="settings-header">
+                <button class="back-btn" onclick="toggleSettings()">
+                    <img src="images/back.png" alt="Back" class="back-icon">
+                    <span>Back</span>
+                </button>
+            </div>
+
+            <div class="settings-content">
+
+                <div class="user-info">
+                    <div class="avatar-large"></div>
+                    <p id="user-email-display" class="user-email"></p>
+                </br>
+                    <button class="btn-secondary" onclick="handleLogout()">Logout</button>
+                </div>
+
+                <div class="settings-section">
+                    <h3>My Documents</h3>
+                    <div id="documents-list" class="documents-list">
+                        <p class="loading-text">Loading documents...</p>
+                    </div>
+                </div>
+
+                <div class="settings-actions">
+                    <button class="btn-danger" onclick="deleteAllDocuments()">
+                        Delete All Documents
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Overlay -->
+        <div id="settings-overlay"
+             class="settings-overlay"
+             onclick="toggleSettings()"></div>
+
+    </div> <!-- ✅ Chat screen closes here -->
+
+
+    <script src="js/app.js"></script>
+
+</body>
+</html>
